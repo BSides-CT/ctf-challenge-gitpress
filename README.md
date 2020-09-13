@@ -26,7 +26,7 @@ It is a multi-level challenge that requires the player to do the following:
 
 ### Deploy the challenge
 
-*Test locally:* Simply run `./start.sh` to build and run the Docker container. The website will be accessible at (http://localhost:8080)[http://localhost:8080]. When you're done, tear it down with `docker stop gitpress`.
+*Test locally:* Simply run `./start.sh` to build and run the Docker container. The website will be accessible at [http://localhost:8080](http://localhost:8080). When you're done, tear it down with `docker stop gitpress`.
 
 *Run in AWS:* I don't know how to set this up - just make sure ports 80 and 3306 are publicly accessible.
 
@@ -35,14 +35,14 @@ It is a multi-level challenge that requires the player to do the following:
 1. Run `nmap` or another port scanner to discover HTTP on port 80 and MySQL on port 3306.
 2. Browse to the website and observe that it is running WordPress.
 3. Use any popular dirbusting tool to discover `/.git/config` publicly accessible on the website.
-4. Use a tool like (gitpillage)[https://github.com/koto/gitpillage] to download the site contents from GitHub, or browse to the GitHub repository using the information in the config file.
+4. Use a tool like [gitpillage](https://github.com/koto/gitpillage) to download the site contents from GitHub, or browse to the GitHub repository using the information in the config file.
 5. Browse the site contents or search for secrets and identify two files:
    - Flag 1 in `/flag1.txt`
    - MySQL credentials in `/wp-config.php`
 6. Use the credentials (`dbuser:AUER2YXbiRtp4cheFGj5JH8dg`) to log in to the database on port 3306.
 7. Read the contents of the `wp_users` table to identify the administrator's username (`unit_54`) and password hash.
    - Maybe try to crack the hash but fail.
-8. Generate a new hash using another WordPress site or (an online generator)[https://www.useotools.com/wordpress-password-hash-generator] and replace the administrator's hash with it.
+8. Generate a new hash using another WordPress site or [an online generator](https://www.useotools.com/wordpress-password-hash-generator) and replace the administrator's hash with it.
 9. Log in to the WordPress site as the administrator using the new password.
    - Collect Flag 2 from the admin banner.
 10. Use the built-in file editor to inject PHP code in one of the theme files, then trigger it by browsing the site. Leverage this to gain shell access in one of several ways:
