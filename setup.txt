@@ -58,9 +58,9 @@ nano ~/.ssh/config
 git init
 echo ".DS_Store" >.gitignore
 git add -A
-git commit -m "initial commit"
+git commit -m "Initial commit"
 git remote add origin git@github.com:braindead-sec/kbase.git
-git push
+git push -u origin master
 rm /var/www/html/flag1.txt
 exit
 
