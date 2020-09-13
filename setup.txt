@@ -1,0 +1,74 @@
+# SETUP INSTRUCTIONS
+
+### CLI ###
+cd files
+mkdir mysql
+mkdir html
+cp flag1.txt html/
+docker run -it -p 8080:80 -v $(pwd)/files/html:/var/www/html -v $(pwd)/files/mysql:/var/lib/mysql --rm debian:buster bash
+apt-get update
+apt-get install -y nano wget git mariadb-server php php-mysql libapache2-mod-php apache2
+service mysql start
+mysql_secure_installation
+    root password: zuWi4RWAX3q5eh7OhiXuWQ2Rd
+    remove anonymous: yes
+    disallow remote root: no
+    remove test db: yes
+    reload: yes
+mysql -e "create database kbase"
+mysql -e "create user 'dbuser'@'%' identified by 'AUER2YXbiRtp4cheFGj5JH8dg'"
+mysql -e "grant all privileges on kbase.* to 'dbuser'@'%'"
+cd /var/www/html
+wget https://wordpress.org/latest.tar.gz
+tar xzvf latest.tar.gz
+mv wordpress/* ./
+rm -rf wordpress latest.tar.gz
+service apache2 start
+
+### BROWSER ###
+browse to http://localhost:8080/wp-admin/setup-config.php
+    database name: kbase
+    username: dbuser
+    password: AUER2YXbiRtp4cheFGj5JH8dg
+    database host: localhost
+    table prefix: wp_
+run the installation
+    site title: Knowledge Base
+    username: unit_54
+    password: SzHCCC6sHA5Ot5844BczsXy02
+    email: admin@kbase.int
+log in
+sign out
+
+### FILE EDITOR ###
+open files/html/wp-admin/includes/file.php
+comment out or delete lines 509-625 (https://stackoverflow.com/questions/52671255/wordpress-editor-not-updating-files-unable-to-communicate-back-with-site-to-che)
+
+### CLI ###
+mkdir ~/.ssh
+nano ~/.ssh/braindead-sec
+    paste private key
+chmod 600 ~/.ssh/braindead-sec
+nano ~/.ssh/config
+    Host github.com
+        User git
+        PubkeyAuthentication yes
+        IdentityFile ~/.ssh/braindead-sec
+        IdentitiesOnly yes
+git init
+echo ".DS_Store" >.gitignore
+git add -A
+git commit -m "initial commit"
+git remote add origin git@github.com:braindead-sec/kbase.git
+git push
+rm /var/www/html/flag1.txt
+exit
+
+### FILE EDITOR ###
+open files/html/wp-admin/index.php
+change line 115 to:
+	<h1><?php echo esc_html( $title ); ?> - <span style="color: red; font-weight:bold">Flag 2 is d6743b723a97c2fcb7ff821b1c1f4c4f</span></h1>
+
+### CLI ###
+cd files
+tar czvf html.tgz html
