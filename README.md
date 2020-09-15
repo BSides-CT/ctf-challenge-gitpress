@@ -46,17 +46,17 @@ It is a multi-level challenge that requires the player to do the following:
 9. Log in to the WordPress site as the administrator using the new password.
    - Collect Flag 2 from the admin banner.
 10. Use the built-in file editor to inject PHP code in one of the theme files, then trigger it by browsing the site. Leverage this to gain shell access in one of several ways:
-   - PHP web shell
-   - PHP reverse shell
-   - PHP file upload + binary execution
+    - PHP web shell
+    - PHP reverse shell
+    - PHP file upload + binary execution
 11. Perform local reconnaissance and identify that the current user is `www-data` with home directory `/var/www`.
-   - Collect Flag 3 at `/var/www/flag3.txt`.
+    - Collect Flag 3 at `/var/www/flag3.txt`.
 12. Check sudo privileges with `sudo -l` and find that `www-data` can execute `sudo nmap`.
-   - Maybe try `sudo nmap --interactive` but the version doesn't support it.
-   - Open a root shell like so:
-     ```
-     TF=$(mktemp)
-     echo 'os.execute("/bin/sh")' > $TF
-     sudo nmap --script=$TF
-     ```
-   - Collect Flag 4 at `/root/flag4.txt`.
+    - Maybe try `sudo nmap --interactive` but the version doesn't support it.
+13. Open a root shell like so:
+    ```
+    TF=$(mktemp)
+    echo 'os.execute("/bin/sh")' > $TF
+    sudo nmap --script=$TF
+    ```
+    - Collect Flag 4 at `/root/flag4.txt`.
