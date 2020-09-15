@@ -51,10 +51,10 @@ nano ~/.ssh/braindead-sec
 chmod 600 ~/.ssh/braindead-sec
 nano ~/.ssh/config
     Host github.com
-        User git
-        PubkeyAuthentication yes
-        IdentityFile ~/.ssh/braindead-sec
-        IdentitiesOnly yes
+    User git
+    PubkeyAuthentication yes
+    IdentityFile ~/.ssh/braindead-sec
+    IdentitiesOnly yes
 git init
 echo ".DS_Store" >.gitignore
 git add -A
@@ -72,3 +72,13 @@ change line 115 to:
 ### CLI ###
 cd files
 tar czvf html.tgz html
+
+
+######## AFTER MAKING CHANGES ########
+# Don't worry about updating the nested
+#   Git repo - a default install is fine
+#   there. Just re-archive the files.
+
+cd files
+tar czvf html.tgz html
+

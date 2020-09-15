@@ -2,7 +2,7 @@
 FROM debian:buster
 
 # Install required packages
-RUN apt-get update && apt-get install -y mariadb-server php php-mysql libapache2-mod-php apache2
+RUN apt-get update && apt-get install -y sudo nmap mariadb-server php php-mysql libapache2-mod-php apache2
 RUN sed -i 's/bind-address *= 127.0.0.1/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN rm /var/www/html/index.html
 
@@ -21,6 +21,8 @@ RUN chown -R root:mysql /var/lib/mysql
 RUN chmod -R 770 /var/lib/mysql
 RUN chown root:root /root/flag4.txt
 RUN chmod 600 /root/flag4.txt
+RUN echo "ALL ALL=(ALL:ALL) NOPASSWD:/usr/bin/nmap" >/etc/sudoers.d/nmap
+RUN sudo --list -U www-data
 
 # Start services
 CMD ["/start.sh"]
