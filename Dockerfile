@@ -3,8 +3,12 @@ FROM debian:buster
 
 # Install required packages
 RUN apt-get update && apt-get install -y sudo nmap mariadb-server php php-mysql libapache2-mod-php apache2
+
+# Configure listening ports
 RUN sed -i 's/bind-address *= 127.0.0.1/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN rm /var/www/html/index.html
+RUN echo "Listen 8080" >> /etc/apache2/ports.conf
+RUN sed -i 's/:80/:8080./' /etc/apache2/sites-enabled/000-default.conf
 
 # Install custom files
 COPY ./files/start.sh /
