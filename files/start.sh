@@ -1,5 +1,10 @@
 #!/bin/bash
-EXTERNALIP=$(curl 'https://api.ipify.org')
-sed -i 's/changeme/'"$EXTERNALIP"'/' /var/www/html/wp-config.php
+
+# Configure WP site URL withexternal IP
+# Comment out these two lines to test on localhost
+EXTERNALIP=$(curl -s 'https://api.ipify.org')
+sed -i 's|http://localhost|http://'"$EXTERNALIP"'|' /var/www/html/wp-config.php
+
+# Start services
 service mysql start
 apache2ctl -D FOREGROUND

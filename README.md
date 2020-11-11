@@ -26,13 +26,13 @@ It is a multi-level challenge that requires the player to do the following:
 
 ### Deploy the challenge
 
-*Test locally:* Simply run `./start.sh` to build and run the Docker container. The website will be accessible at [http://localhost:8080](http://localhost:8080). When you're done, tear it down with `docker stop gitpress`.
+*Test locally:* Comment out lines 5 & 6 of `files/start.sh`, then run `./start.sh` to build and run the Docker container. The website will be accessible at [http://localhost](http://localhost). When you're done, tear it down with `docker stop gitpress`.
 
-*Run in AWS:* I don't know how to set this up - just make sure ports 8080 and 3306 are publicly accessible. Outbound traffic should be allowed so that the player can get a reverse shell.
+*Run in AWS:* I don't know how to set this up - just make sure ports 80 and 3306 are publicly accessible. Outbound traffic should be allowed so that the player can get a reverse shell.
 
 ### Solve the challenge
 
-1. Run `nmap` or another port scanner to discover HTTP on port 8080 and MySQL on port 3306.
+1. Run `nmap` or another port scanner to discover HTTP on port 80 and MySQL on port 3306.
 2. Browse to the website and observe that it is running WordPress.
 3. Use any popular dirbusting tool to discover `/.git/config` publicly accessible on the website.
 4. Use a tool like [gitpillage](https://github.com/koto/gitpillage) to download the site contents from GitHub, or browse to the GitHub repository using the information in the config file.
