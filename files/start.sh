@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Configure WP site URL withexternal IP
+# Configure WP site URL with external IP
 # Comment out these two lines to test on localhost
 EXTERNALIP=$(curl -s 'https://api.ipify.org')
 sed -i 's|http://localhost|http://'"$EXTERNALIP"'|' /var/www/html/wp-config.php
